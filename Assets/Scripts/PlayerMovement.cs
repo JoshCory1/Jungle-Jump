@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10f;
+    [SerializeField] float jumpSpeed = 10;
     Animator myAnimator;
     // [SerializeField] float jumpSpeed = 500;
     
@@ -29,11 +30,19 @@ public class PlayerMovement : MonoBehaviour
         moveInput = value.Get<Vector2>();
         Debug.Log(moveInput);
     }
+    void OnJump(InputValue value)
+    {
+        if(value.isPressed)
+        {
+            rb.velocity += new Vector2 (0f, jumpSpeed);
+        }
+    }
     void Run()
     {
         Vector2 playerVelocity = new Vector2 (moveInput.x * runSpeed * Time.deltaTime, rb.velocity.y);
         rb.velocity = playerVelocity;
-        if (Mathf.Abs(rb.velocity.x) > Mathf.Epsilon)
+        bool playerHasHorizontalSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
+        if (playerHasHorizontalSpeed)
         {
             myAnimator.SetBool("isRunning", true);
         }
