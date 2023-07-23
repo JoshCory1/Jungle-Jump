@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpSpeed = 10;
+    CapsuleCollider2D myCapsuleCollider;
     Animator myAnimator;
     // [SerializeField] float jumpSpeed = 500;
     
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myCapsuleCollider = GetComponent<CapsuleCollider2D>();
         myAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -32,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnJump(InputValue value)
     {
+        if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) {return;}
         if(value.isPressed)
         {
             rb.velocity += new Vector2 (0f, jumpSpeed);
