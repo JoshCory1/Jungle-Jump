@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float runSpeed = 10f;
-    [SerializeField] float jumpSpeed = 10;
+    [SerializeField] float jumpSpeed = 10f;
+    [SerializeField] float ClimbSpeed = 10f;
     CapsuleCollider2D myCapsuleCollider;
     Animator myAnimator;
     // [SerializeField] float jumpSpeed = 500;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Run();
         flipSprite();
+        Climb();
     }
     void OnMove(InputValue value)
     {
@@ -63,4 +65,20 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2 (Mathf.Sign(rb.velocity.x), 1f);
         }
     }
+    void Climb()
+    {
+        if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("ClimbingLayer"))) {return;}
+        Vector2 playerVelocity = new Vector2 (rb.velocity.x, moveInput.y * ClimbSpeed);
+        rb.velocity = playerVelocity;
+        bool playerHasVerticaleSpeed = Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+        if (playerHasVerticaleSpeed)
+        {
+            myAnimator.SetBool("isClimbing", true);
+        }
+        else
+        {
+            myAnimator.SetBool("isClimbing", false);
+        }
+    }
+
 }
