@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float ClimbSpeed = 10f;
     CapsuleCollider2D myCapsuleCollider;
     Animator myAnimator;
+    float gravityScaleAtStart;
     // [SerializeField] float jumpSpeed = 500;
     
     Vector2 moveInput;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
         myCapsuleCollider = GetComponent<CapsuleCollider2D>();
         myAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        gravityScaleAtStart = rb.gravityScale;
     }
 
     // Update is called once per frame
@@ -67,17 +69,20 @@ public class PlayerMovement : MonoBehaviour
     }
     void Climb()
     {
-        if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("ClimbingLayer"))) {return;}
-        Vector2 playerVelocity = new Vector2 (rb.velocity.x, moveInput.y * ClimbSpeed);
-        rb.velocity = playerVelocity;
-        bool playerHasVerticaleSpeed = Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
-        if (playerHasVerticaleSpeed)
+        if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("ClimbingLayer"))) 
         {
-            myAnimator.SetBool("isClimbing", true);
+            rb.gravityScale = gravityScaleAtStart;
+            myAnimator.SetBool("isClimbing", false); 
+            return;
+            
         }
         else
         {
-            myAnimator.SetBool("isClimbing", false);
+            rb.gravityScale = 0f;
+            Vector2 playerVelocity = new Vector2 (rb.velocity.x, moveInput.y * ClimbSpeed);
+            rb.velocity = playerVelocity;
+            bool playerHasVerticalSpeed = Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+            myAnimator.SetBool("isClimbing", playerHasVerticalSpeed);
         }
     }
 
