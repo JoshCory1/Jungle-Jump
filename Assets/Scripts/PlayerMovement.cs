@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] float ClimbSpeed = 10f;
     CapsuleCollider2D myCapsuleCollider;
+    CircleCollider2D myCircleCollider;
     Animator myAnimator;
     float gravityScaleAtStart;
     // [SerializeField] float jumpSpeed = 500;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        myCircleCollider = GetComponent<CircleCollider2D>();
         myCapsuleCollider = GetComponent<CapsuleCollider2D>();
         myAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -38,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnJump(InputValue value)
     {
-        if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) {return;}
+        if(!myCircleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) {return;}
         if(value.isPressed)
         {
             rb.velocity += new Vector2 (0f, jumpSpeed);
