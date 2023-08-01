@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     CircleCollider2D myCircleCollider;
     Animator myAnimator;
     float gravityScaleAtStart;
+    bool isAlive = true;
     // [SerializeField] float jumpSpeed = 500;
     
     Vector2 moveInput;
@@ -29,10 +31,21 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!isAlive) {return;}
         Run();
         flipSprite();
         Climb();
+        Die();
     }
+
+    private void Die()
+    {
+        if(myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        {
+            isAlive = false;
+        }
+    }
+
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
@@ -40,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnJump(InputValue value)
     {
+        if(!isAlive) {return;}
         if(!myCircleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) {return;}
         if(value.isPressed)
         {
@@ -48,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Run()
     {
+        if(!isAlive) {return;}
         Vector2 playerVelocity = new Vector2 (moveInput.x * runSpeed * Time.deltaTime, rb.velocity.y);
         rb.velocity = playerVelocity;
         bool playerHasHorizontalSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
@@ -62,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void flipSprite()
     {
+        if(!isAlive) {return;}
         bool playerHasHorizontalSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
         if (playerHasHorizontalSpeed)
         {
@@ -71,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Climb()
     {
+        if(!isAlive) {return;}
         if(!myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("ClimbingLayer"))) 
         {
             rb.gravityScale = gravityScaleAtStart;
