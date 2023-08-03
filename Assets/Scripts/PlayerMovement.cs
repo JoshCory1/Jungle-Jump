@@ -10,13 +10,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] float ClimbSpeed = 10f;
+    [SerializeField] float DeathDelaytime = 3;
+    [SerializeField] GameObject Bullet;
+    [SerializeField] Transform Gun;
     CapsuleCollider2D myCapsuleCollider;
     CircleCollider2D myCircleCollider;
     Animator myAnimator;
     float gravityScaleAtStart;
     bool isAlive = true;
     GameObject tilemap;
-    [SerializeField] float deathDelaytime = 3;
+    
     // [SerializeField] float jumpSpeed = 500;
     
     Vector2 moveInput;
@@ -37,24 +40,24 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!isAlive) {return;}
         Run();
-        flipSprite();
+        FlipSprite();
         Climb();
         Die();
     }
 
     private void Die()
     {
-        if(myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if(myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Hazards")))
         {
             tilemap.SetActive(false);
             isAlive = false;
             rb.velocity = new Vector2(0, jumpSpeed);
             myAnimator.SetTrigger("Dying");
-            Invoke("loadNexLvl", deathDelaytime);
+            Invoke("loadNexLvl", DeathDelaytime);
         }
     }
 
-    private void loadNexLvl()
+    private void LoadNexLvl()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
@@ -74,6 +77,11 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity += new Vector2 (0f, jumpSpeed);
         }
     }
+    void OnFire(InputValue value)
+    {
+        if(!isAlive) {return;}
+        Instantiate(Bullet, Gun.position, transform.rotation);   
+    }
     void Run()
     {
         if(!isAlive) {return;}
@@ -89,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
             myAnimator.SetBool("isRunning", false);
         }
     }
-    void flipSprite()
+    void FlipSprite()
     {
         if(!isAlive) {return;}
         bool playerHasHorizontalSpeed = Mathf.Abs(rb.velocity.x) > Mathf.Epsilon;
