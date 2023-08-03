@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - EnemyTag
+  - Tilemap
   layers:
   - Default
   - TransparentFX

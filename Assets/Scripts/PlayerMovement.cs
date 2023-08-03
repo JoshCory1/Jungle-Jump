@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     Animator myAnimator;
     float gravityScaleAtStart;
     bool isAlive = true;
+    GameObject tilemap;
+    [SerializeField] float deathDelaytime = 3;
     // [SerializeField] float jumpSpeed = 500;
     
     Vector2 moveInput;
@@ -22,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        tilemap = GameObject.FindWithTag("Tilemap");
         myCircleCollider = GetComponent<CircleCollider2D>();
         myCapsuleCollider = GetComponent<CapsuleCollider2D>();
         myAnimator = GetComponent<Animator>();
@@ -43,10 +46,18 @@ public class PlayerMovement : MonoBehaviour
     {
         if(myCapsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
         {
+            tilemap.SetActive(false);
             isAlive = false;
-            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentSceneIndex);
+            rb.velocity = new Vector2(0, jumpSpeed);
+            myAnimator.SetTrigger("Dying");
+            Invoke("loadNexLvl", deathDelaytime);
         }
+    }
+
+    private void loadNexLvl()
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
     }
 
     void OnMove(InputValue value)
