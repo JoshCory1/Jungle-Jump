@@ -68,7 +68,7 @@ Transform:
   m_Children:
   - {fileID: 5290357572045402346}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1791461390177227547
 Animator:
@@ -130,7 +130,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 751312193
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -387027998, guid: c4c8532972db291d1b4c5a04b959cdc5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -250,7 +250,9 @@ MonoBehaviour:
   runSpeed: 200
   jumpSpeed: 10
   ClimbSpeed: 5
-  deathDelaytime: 3
+  DeathDelaytime: 2
+  Bullet: {fileID: 5265674014511257228, guid: c0f3894ea117e702d9267a3c4f4222b1, type: 3}
+  Gun: {fileID: 5290357572045402346}
 --- !u!58 &3432139975774853319
 CircleCollider2D:
   m_ObjectHideFlags: 0

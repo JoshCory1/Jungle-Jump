@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6902924593315010275}
   m_Layer: 11
   m_Name: Bloop (Enemy)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 709105677
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 332926837, guid: bf656bb0d69cb3cbd85c8c6346ed1f44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
