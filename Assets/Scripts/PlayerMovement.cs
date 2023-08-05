@@ -53,16 +53,9 @@ public class PlayerMovement : MonoBehaviour
             isAlive = false;
             rb.velocity = new Vector2(0, jumpSpeed);
             myAnimator.SetTrigger("Dying");
-            Invoke("LoadNexLvl", DeathDelaytime);
+            FindObjectOfType<GameSession>().processPlayerDeath();
         }
     }
-
-    private void LoadNexLvl()
-    {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
-    }
-
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();

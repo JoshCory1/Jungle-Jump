@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 3432139975774853319}
   m_Layer: 8
   m_Name: StopDropTurnaround (Player)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,7 +68,7 @@ Transform:
   m_Children:
   - {fileID: 5290357572045402346}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &1791461390177227547
 Animator:
