@@ -26,6 +26,7 @@ public class LvlExit : MonoBehaviour
         {
             nexSceneIndex = 0;
         }
+        FindObjectOfType<ScreenPersist>().ScreenDestroy();
         SceneManager.LoadScene(nexSceneIndex);
     }
     
