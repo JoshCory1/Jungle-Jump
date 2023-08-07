@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class GameSession : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GameSession : MonoBehaviour
     [SerializeField] TextMeshProUGUI LivesText;
     [SerializeField] TextMeshProUGUI CoinText;
     [SerializeField] int CoinScoreing;
+    [SerializeField] float DeathDelay =1.5f;
     void Awake()
     {
         int numOfGameSessions = FindObjectsOfType<GameSession>().Length;
@@ -32,7 +34,12 @@ public class GameSession : MonoBehaviour
 
     public void processPlayerDeath()
     {
-        if(playerLives > 1)
+        Invoke("InvokeDeath", DeathDelay);
+    }
+
+    private void InvokeDeath()
+    {
+        if (playerLives > 1)
         {
             TakePlayerLife();
         }
@@ -57,9 +64,10 @@ public class GameSession : MonoBehaviour
         Destroy(gameObject);
         
     }
-    public void processScores()
+    public void processScores(int pointsToAdd)
     {
-        CoinScoreing ++;
+        CoinScoreing += pointsToAdd;
         CoinText.text = CoinScoreing.ToString();
+        
     }
 }

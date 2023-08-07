@@ -157,6 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinClip: {fileID: 8300000, guid: 6423e931f8f5c9f5d80dbe5426d05b92, type: 3}
+  pointsForCoinPickup: 250
+  WasColected: 0
 --- !u!82 &3127073275916262180
 AudioSource:
   m_ObjectHideFlags: 0

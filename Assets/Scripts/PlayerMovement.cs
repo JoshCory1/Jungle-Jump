@@ -10,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float runSpeed = 10f;
     [SerializeField] float jumpSpeed = 10f;
     [SerializeField] float ClimbSpeed = 10f;
-    [SerializeField] float DeathDelaytime = 1f;
     [SerializeField] GameObject Bullet;
     [SerializeField] Transform Gun;
     CapsuleCollider2D myCapsuleCollider;
@@ -53,9 +52,14 @@ public class PlayerMovement : MonoBehaviour
             isAlive = false;
             rb.velocity = new Vector2(0, jumpSpeed);
             myAnimator.SetTrigger("Dying");
-            FindObjectOfType<GameSession>().processPlayerDeath();
+            ReloadLvl();
         }
     }
+     void ReloadLvl()
+     {
+        
+        FindObjectOfType<GameSession>().processPlayerDeath();
+     }
     void OnMove(InputValue value)
     {
         moveInput = value.Get<Vector2>();
